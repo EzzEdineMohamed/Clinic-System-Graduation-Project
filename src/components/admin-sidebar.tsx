@@ -3,25 +3,39 @@
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Stethoscope, UserRound, Users, Menu, X } from "lucide-react";
+import {
+  LayoutDashboard,
+  Stethoscope,
+  UserRound,
+  Users,
+  Menu,
+  X,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LinkPending } from "@/components/link-pending";
 
 const LINKS = [
-  { href: "/admin", label: "لوحة التحكم", icon: LayoutDashboard },
+  // { href: "/admin", label: "لوحة التحكم", icon: LayoutDashboard },
   { href: "/admin/doctors", label: "الدكاترة", icon: Stethoscope },
-  { href: "/admin/nurses", label: "الممرضين", icon: UserRound },
+  { href: "/admin/nurses", label: "السكرتارية", icon: UserRound },
   { href: "/admin/patients", label: "المرضى", icon: Users },
 ];
 
-export function AdminSidebar({ name, logout }: { name: string; logout: React.ReactNode }) {
+export function AdminSidebar({
+  name,
+  logout,
+}: {
+  name: string;
+  logout: React.ReactNode;
+}) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
   const nav = (
     <nav className="grid gap-1">
       {LINKS.map(({ href, label, icon: Icon }) => {
-        const active = href === "/admin" ? pathname === href : pathname.startsWith(href);
+        const active =
+          href === "/admin" ? pathname === href : pathname.startsWith(href);
         return (
           <Link
             key={href}
@@ -30,7 +44,9 @@ export function AdminSidebar({ name, logout }: { name: string; logout: React.Rea
             aria-current={active ? "page" : undefined}
             className={cn(
               "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-semibold transition-colors",
-              active ? "bg-primary text-primary-foreground" : "text-sidebar-foreground/75 hover:bg-sidebar-accent hover:text-sidebar-foreground",
+              active
+                ? "bg-primary text-primary-foreground"
+                : "text-sidebar-foreground/75 hover:bg-sidebar-accent hover:text-sidebar-foreground",
             )}
           >
             <Icon className="size-4" />
@@ -47,7 +63,10 @@ export function AdminSidebar({ name, logout }: { name: string; logout: React.Rea
       <span className="grid size-8 place-items-center rounded-md bg-primary text-primary-foreground">
         <Stethoscope className="size-4" />
       </span>
-      عيادتي <span className="text-xs font-medium text-sidebar-foreground/60">| الإدارة</span>
+      عيادتي{" "}
+      <span className="text-xs font-medium text-sidebar-foreground/60">
+        | الإدارة
+      </span>
     </div>
   );
 
@@ -76,7 +95,7 @@ export function AdminSidebar({ name, logout }: { name: string; logout: React.Rea
         </button>
       </div>
       {open && (
-        <div className="fixed inset-x-0 top-[3.75rem] bottom-0 z-20 flex flex-col gap-4 bg-sidebar p-4 text-sidebar-foreground lg:hidden">
+        <div className="fixed inset-x-0 top-15 bottom-0 z-20 flex flex-col gap-4 bg-sidebar p-4 text-sidebar-foreground lg:hidden">
           {nav}
           {footer}
         </div>

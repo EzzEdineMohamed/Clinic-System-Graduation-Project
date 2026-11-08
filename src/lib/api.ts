@@ -22,8 +22,9 @@ const PUBLIC_KEY = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
 export class ApiError extends Error {
   constructor(
     public status: number, // الـ HTTP status، و 0 = موصلناش للسيرفر خالص
-    public code: string, // زي "invalid_credentials" أو "user_already_exists" أو "network"
+    public code: string, // زي "invalid_credentials" أو "email_exists" أو "network"
     message: string,
+    public fields?: Record<string, string>, // أخطاء كل خانة (create-staff بيرجعها)
   ) {
     super(message);
   }
@@ -31,9 +32,9 @@ export class ApiError extends Error {
 
 // ---------- الـ function الوحيدة اللي بتعمل fetch ---------------------
 
-async function request<T>(
+export async function request<T>(
   path: string,
-  { method = "POST", body, token }: RequestOptions = {},
+  { method = "POST", body, token, headers }: RequestOptions = {},
 ): Promise<T> {
   let res: Response;
   try {
@@ -43,6 +44,7 @@ async function request<T>(
         apikey: PUBLIC_KEY,
         Authorization: `Bearer ${token ?? PUBLIC_KEY}`,
         "Content-Type": "application/json",
+        ...headers,
       },
       body: body === undefined ? undefined : JSON.stringify(body),
       cache: "no-store",
@@ -55,10 +57,11 @@ async function request<T>(
   const data = text ? JSON.parse(text) : null;
 
   if (!res.ok) {
-    // الـ Auth بيرجع { error_code, msg }، والـ RPC بيرجع { code, message }
+    // الـ Auth بيرجع { error_code, msg }، والـ RPC بيرجع { code, message }،
+    // و create-staff بيرجع { code, message, errors }
     const code = data?.error_code ?? data?.code ?? String(res.status);
     const message = data?.msg ?? data?.message ?? "حصلت مشكلة، حاول تاني";
-    throw new ApiError(res.status, String(code), message);
+    throw new ApiError(res.status, String(code), message, data?.errors);
   }
   return data as T;
 }
@@ -72,21 +75,28 @@ export const api = {
 
   /** POST /auth/v1/token?grant_type=password: تسجيل الدخول */
   login: (email: string, password: string) =>
-    request<Session>("/auth/v1/token?grant_type=password", { body: { email, password } }),
+    request<Session>("/auth/v1/token?grant_type=password", {
+      body: { email, password },
+    }),
 
   /** POST /auth/v1/token?grant_type=refresh_token: توكن جديد لما القديم يخلص */
   refresh: (refreshToken: string) =>
-    request<Session>("/auth/v1/token?grant_type=refresh_token", { body: { refresh_token: refreshToken } }),
+    request<Session>("/auth/v1/token?grant_type=refresh_token", {
+      body: { refresh_token: refreshToken },
+    }),
 
   /** POST /auth/v1/logout: يقفل الـ session على السيرفر */
   logout: (token: string) => request<null>("/auth/v1/logout", { token }),
 
   /** POST /rest/v1/rpc/get_my_profile: أنا مين، والـ role بتاعي إيه */
-  me: (token: string) => request<Profile | null>("/rest/v1/rpc/get_my_profile", { token, body: {} }),
+  me: (token: string) =>
+    request<Profile | null>("/rest/v1/rpc/get_my_profile", { token, body: {} }),
 
   /** POST /rest/v1/rpc/is_phone_registered: بيشتغل من غير دخول (صفحة الـ Register) */
   isPhoneRegistered: (phone: string) =>
-    request<boolean>("/rest/v1/rpc/is_phone_registered", { body: { p_phone: phone } }),
+    request<boolean>("/rest/v1/rpc/is_phone_registered", {
+      body: { p_phone: phone },
+    }),
 
   /** أي دالة تانية في الداتابيز: POST /rest/v1/rpc/<name>. للموديولات الجاية */
   rpc: <T>(name: string, params: Record<string, unknown>, token?: string) =>

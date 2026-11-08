@@ -23,6 +23,7 @@
 //   - src/app/(auth)/register/register-form.tsx  ← registerSchema
 // =====================================================================
 
+import { Gender } from "@/types/auth";
 import { z } from "zod";
 
 // ---------------------------------------------------------------------
@@ -34,8 +35,7 @@ import { z } from "zod";
 // يعني الرقم كله 11 رقم. ونفس الـ regex ده موجود في الداتابيز
 // (check constraint على عمود phone)، فالاتنين متفقين.
 // ---------------------------------------------------------------------
-const EG_MOBILE = /^01[0125][0-9]{8}$/;
-
+export const EG_MOBILE = /^01[0125][0-9]{8}$/;
 // =====================================================================
 // loginSchema: فورم تسجيل الدخول
 // =====================================================================
@@ -68,8 +68,11 @@ export const registerSchema = z
     // .trim()      → شيل المسافات من الأول والآخر قبل ما تعد الحروف.
     // .min(3, ...) → 3 حروف على الأقل (نفس القيد اللي في الداتابيز).
     // .max(80, ...)→ 80 حرف بالكتير، علشان محدش يلزق مقال في خانة الاسم.
-    full_name: z.string().trim().min(3, "الاسم لازم يكون 3 حروف على الأقل").max(80, "الاسم طويل زيادة"),
-
+    full_name: z
+      .string()
+      .trim()
+      .min(3, "الاسم لازم يكون 3 حروف على الأقل")
+      .max(80, "الاسم طويل زيادة"),
     // الأيميل: نفس قاعدة الـ Login بالظبط.
     email: z.email("اكتب أيميل صحيح").trim().toLowerCase(),
 
@@ -77,7 +80,10 @@ export const registerSchema = z
     // .regex(EG_MOBILE, ...) → لازم يطابق الـ regex اللي فوق.
     // ملحوظة: الـ schema بيتأكد من شكل الرقم بس. إن الرقم مش متسجل قبل
     // كده ده بيتعرف من السيرفر (is_phone_registered) بعد الـ validation.
-    phone: z.string().trim().regex(EG_MOBILE, "رقم موبايل مصري صحيح (11 رقم يبدأ بـ 01)"),
+    phone: z
+      .string()
+      .trim()
+      .regex(EG_MOBILE, "رقم موبايل مصري صحيح (11 رقم يبدأ بـ 01)"),
 
     // الباسوورد: 8 حروف على الأقل.
     // مش بنعمل .trim() هنا، لأن المسافة ممكن تكون جزء من الباسوورد فعلاً.
@@ -102,7 +108,11 @@ export const registerSchema = z
     date_of_birth: z.iso.date("اختار تاريخ الميلاد").refine((d) => {
       const date = new Date(d);
       const now = new Date();
-      const oldest = new Date(now.getFullYear() - 120, now.getMonth(), now.getDate());
+      const oldest = new Date(
+        now.getFullYear() - 120,
+        now.getMonth(),
+        now.getDate(),
+      );
       return date <= now && date >= oldest;
     }, "تاريخ الميلاد مش منطقي"),
 
@@ -111,7 +121,12 @@ export const registerSchema = z
     // .optional()     → الخانة ممكن متتبعتش خالص.
     // .default("")    → ولو متبعتتش، اعتبرها نص فاضي. والداتابيز بتحوّل
     //                   النص الفاضي لـ null، والفرونت بيعرضه "لا يوجد".
-    chronic_disease: z.string().trim().max(200, "الوصف طويل زيادة").optional().default(""),
+    chronic_disease: z
+      .string()
+      .trim()
+      .max(200, "الوصف طويل زيادة")
+      .optional()
+      .default(""),
   })
   // .refine على الـ object كله: هنا نقدر نشوف كل الخانات مع بعض.
   //   (v) => v.password === v.confirm_password
@@ -142,4 +157,17 @@ export type FieldErrors = Partial<Record<string, string[]>>;
 //   if (!parsed.success) return setFe(fieldErrorsOf(parsed.error));
 export function fieldErrorsOf(error: z.ZodError): FieldErrors {
   return z.flattenError(error).fieldErrors as FieldErrors;
+}
+
+/** مريض في صفحة الأدمن (سطر في patients + عدد حجوزاته) */
+export interface PatientRow {
+  id: string;
+  profile_id: string | null; // null = اتسجل في العيادة من غير حساب
+  full_name: string;
+  phone: string;
+  gender: Gender | null;
+  date_of_birth: string | null;
+  chronic_disease: string | null;
+  created_at: string;
+  appointments: { count: number }[]; // Supabase بيرجع العدد كده: [{ count: 3 }]
 }

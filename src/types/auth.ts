@@ -68,4 +68,5 @@ export interface RequestOptions {
   method?: string;
   body?: unknown;
   token?: string;
+  headers?: Record<string, string>; // headers زيادة، زي Prefer
 }
