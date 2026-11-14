@@ -63,7 +63,7 @@ export function AdminSidebar({
       <span className="grid size-8 place-items-center rounded-md bg-primary text-primary-foreground">
         <Stethoscope className="size-4" />
       </span>
-      عيادتي{" "}
+      عيادتي
       <span className="text-xs font-medium text-sidebar-foreground/60">
         | الإدارة
       </span>
