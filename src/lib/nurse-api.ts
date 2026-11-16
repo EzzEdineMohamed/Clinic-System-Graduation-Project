@@ -42,7 +42,7 @@ export const nurseApi = {
   /** N4: GET حجوزات يوم معين، وممكن لدكتور واحد بس */
   dayBookings: (token: string, date: string, doctorId?: string) => {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date))
-      throw new ApiError(400, "bad_date", "التاريخ مش صحيح");
+      throw new ApiError(400, "bad_date", "التاريخ غير صحيح");
     let path = `/rest/v1/appointments?select=${DAY_COLUMNS}&appointment_date=eq.${date}&order=start_time`;
     if (doctorId) path += `&doctor_id=eq.${encodeURIComponent(doctorId)}`;
     return request<DayBooking[]>(path, { method: "GET", token });

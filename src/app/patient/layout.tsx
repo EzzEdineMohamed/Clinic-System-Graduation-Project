@@ -10,7 +10,7 @@ export default async function PatientLayout({ children }: { children: React.Reac
         items={[
           { href: "/patient", label: "احجز كشف" },
           { href: "/patient/appointments", label: "سجل حجوزاتي" },
-          { href: "/patient/profile", label: "البروفايل" },
+          { href: "/patient/profile", label: "الملف الشخصي" },
         ]}
       />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6">{children}</main>

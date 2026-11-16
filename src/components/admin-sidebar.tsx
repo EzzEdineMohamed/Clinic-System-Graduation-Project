@@ -16,7 +16,7 @@ import { LinkPending } from "@/components/link-pending";
 
 const LINKS = [
   // { href: "/admin", label: "لوحة التحكم", icon: LayoutDashboard },
-  { href: "/admin/doctors", label: "الدكاترة", icon: Stethoscope },
+  { href: "/admin/doctors", label: "الأطباء", icon: Stethoscope },
   { href: "/admin/nurses", label: "السكرتارية", icon: UserRound },
   { href: "/admin/patients", label: "المرضى", icon: Users },
 ];
@@ -88,7 +88,7 @@ export function AdminSidebar({
           type="button"
           onClick={() => setOpen((o) => !o)}
           className="grid size-9 place-items-center rounded-md hover:bg-sidebar-accent"
-          aria-label={open ? "قفل القائمة" : "فتح القائمة"}
+          aria-label={open ? "إغلاق القائمة" : "فتح القائمة"}
           aria-expanded={open}
         >
           {open ? <X className="size-5" /> : <Menu className="size-5" />}

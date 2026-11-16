@@ -17,14 +17,14 @@ export const cardSchema = z.object({
   card_number: z
     .string()
     .transform((v) => v.replace(/\s/g, "")) // نشيل المسافات
-    .pipe(z.string().regex(/^\d{16}$/, "رقم البطاقة 16 رقم")),
+    .pipe(z.string().regex(/^\d{16}$/, "رقم البطاقة 16 رقمًا")),
   expiry: z
     .string()
     .trim()
-    .regex(/^(0[1-9]|1[0-2])\/\d{2}$/, "اكتب التاريخ كده: MM/YY")
-    .refine(notExpired, "البطاقة دي منتهية"),
+    .regex(/^(0[1-9]|1[0-2])\/\d{2}$/, "أدخل التاريخ بالشكل: MM/YY")
+    .refine(notExpired, "هذه البطاقة منتهية الصلاحية"),
   cvv: z
     .string()
     .trim()
-    .regex(/^\d{3}$/, "الـ CVV عبارة عن 3 أرقام"),
+    .regex(/^\d{3}$/, "رمز CVV مكوّن من 3 أرقام"),
 });

@@ -50,7 +50,7 @@ export async function request<T>(
       cache: "no-store",
     });
   } catch {
-    throw new ApiError(0, "network", "مش قادر أوصل للسيرفر. اتأكد من النت.");
+    throw new ApiError(0, "network", "تعذّر الاتصال بالخادم. تأكد من الاتصال بالإنترنت.");
   }
 
   const text = await res.text();
@@ -60,7 +60,7 @@ export async function request<T>(
     // الـ Auth بيرجع { error_code, msg }، والـ RPC بيرجع { code, message }،
     // و create-staff بيرجع { code, message, errors }
     const code = data?.error_code ?? data?.code ?? String(res.status);
-    const message = data?.msg ?? data?.message ?? "حصلت مشكلة، حاول تاني";
+    const message = data?.msg ?? data?.message ?? "حدثت مشكلة، حاول مرة أخرى";
     throw new ApiError(res.status, String(code), message, data?.errors);
   }
   return data as T;

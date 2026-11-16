@@ -38,7 +38,7 @@ export default async function AdminDoctors() {
     <>
       <div className="flex flex-wrap items-start justify-between gap-4">
         <PageTitle
-          title="الدكاترة"
+          title="الأطباء"
           subtitle={`${doctors.length} دكتور، منهم ${active} شغال`}
         />
         <AddStaffDialog role="doctor" />
@@ -53,7 +53,7 @@ export default async function AdminDoctors() {
       {incomplete > 0 && (
         <Alert className="mb-4 border-amber-300 bg-amber-50 text-amber-900">
           <AlertDescription className="text-amber-900">
-            فيه {incomplete} دكتور ناقص بياناته (التخصص والسعر والمواعيد)، ومحدش
+            يوجد {incomplete} دكتور ناقص بياناته (التخصص والسعر والمواعيد)، ومحدش
             يقدر يحجز عنده لحد ما تكمّلها.
           </AlertDescription>
         </Alert>
@@ -68,7 +68,7 @@ export default async function AdminDoctors() {
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/50">
-                <TableHead>الدكتور</TableHead>
+                <TableHead>الطبيب</TableHead>
                 <TableHead>التخصص</TableHead>
                 <TableHead>سعر الكشف</TableHead>
                 <TableHead>مواعيد العمل</TableHead>
@@ -101,7 +101,7 @@ export default async function AdminDoctors() {
                           {formatMoney(d.doctors.consultation_fee)}
                         </p>
                         <p className="text-xs text-muted-foreground">
-                          {d.doctors.slot_minutes} دقيقة · العيادة{" "}
+                          {d.doctors.slot_minutes} دقيقة · نسبة العيادة{" "}
                           {d.doctors.clinic_share_percent}%
                         </p>
                       </TableCell>

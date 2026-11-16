@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 
 export function PrescriptionButton({
   path,
-  label = "الروشتة",
+  label = "الوصفة الطبية",
 }: {
   path: string;
   label?: string;
@@ -25,7 +25,7 @@ export function PrescriptionButton({
 
   async function onClick() {
     const token = getAccessToken();
-    if (!token) return setError("الجلسة خلصت، اعمل Refresh للصفحة");
+    if (!token) return setError("انتهت الجلسة، أعد تحميل الصفحة");
 
     // التاب بيتفتح الأول، علشان المتصفح ميعتبروش popup ويقفله
     const tab = window.open("", "_blank");

@@ -29,7 +29,7 @@ export const doctorApi = {
   /** D1: GET مرضى يوم معين. الـ RLS بترجّع حجوزات الدكتور ده بس */
   dayVisits: (token: string, date: string) => {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date))
-      throw new ApiError(400, "bad_date", "التاريخ مش صحيح");
+      throw new ApiError(400, "bad_date", "التاريخ غير صحيح");
     return request<DoctorVisit[]>(
       `/rest/v1/appointments?select=${VISIT_COLUMNS}&appointment_date=eq.${date}&status=neq.cancelled&order=start_time`,
       { method: "GET", token },
@@ -58,10 +58,10 @@ export const doctorApi = {
       throw new ApiError(
         400,
         "bad_type",
-        "الروشتة لازم تكون PDF أو صورة JPG أو PNG",
+        "يجب أن تكون الوصفة الطبية ملف PDF أو صورة JPG أو PNG",
       );
     if (file.size > PRESCRIPTION_MAX_BYTES)
-      throw new ApiError(400, "too_big", "حجم الروشتة أكبر من 5 ميجا");
+      throw new ApiError(400, "too_big", "حجم الوصفة الطبية أكبر من 5 ميجابايت");
 
     const path = `${doctorId}/${appointmentId}.${ext}`;
     let res: Response;
@@ -77,14 +77,14 @@ export const doctorApi = {
         body: file,
       });
     } catch {
-      throw new ApiError(0, "network", "مش قادر أوصل للسيرفر. اتأكد من النت.");
+      throw new ApiError(0, "network", "تعذّر الاتصال بالخادم. تأكد من الاتصال بالإنترنت.");
     }
     if (!res.ok) {
       // الـ policy بترفض: الحجز مش بتاعه، أو مش attended، أو المريض ملوش حساب
       throw new ApiError(
         res.status,
         "upload_failed",
-        "مقدرناش نرفع الروشتة. اتأكد إن الحضور متأكد وإن المريض عنده حساب.",
+        "تعذّر رفع الوصفة الطبية. تأكد من تأكيد الحضور ومن أن المريض لديه حساب.",
       );
     }
     return path; // نفس الجزء اللي بعد prescriptions/ في الـ Key اللي راجع
@@ -137,7 +137,7 @@ export function doctorErrorMessage(
       ].includes(err.code)
     )
       return err.message;
-    if (err.status === 400 || err.status === 404) return "الروشتة مش موجودة";
+    if (err.status === 400 || err.status === 404) return "الوصفة الطبية غير موجودة";
   }
   return fallback(err);
 }

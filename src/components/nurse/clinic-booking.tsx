@@ -49,7 +49,7 @@ function StepTitle({ n, title }: { n: number; title: string }) {
 }
 
 /** الجلسة خلصت؟ */
-const NO_TOKEN = "الجلسة خلصت، اعمل Refresh للصفحة وجرب تاني";
+const NO_TOKEN = "انتهت الجلسة، أعد تحميل الصفحة وحاول مرة أخرى";
 
 export function ClinicBooking({ doctors }: { doctors: BookableDoctor[] }) {
   // ---------- 1) المريض ----------
@@ -85,7 +85,7 @@ export function ClinicBooking({ doctors }: { doctors: BookableDoctor[] }) {
   async function search(e: React.FormEvent) {
     e.preventDefault();
     if (!EG_MOBILE.test(digits))
-      return setPhoneError("رقم موبايل مصري صحيح (11 رقم يبدأ بـ 01)");
+      return setPhoneError("رقم هاتف مصري صحيح (11 رقمًا يبدأ بـ 01)");
     setPhoneError(undefined);
     setError(undefined);
 
@@ -202,18 +202,18 @@ export function ClinicBooking({ doctors }: { doctors: BookableDoctor[] }) {
     return (
       <div className="mx-auto w-full max-w-lg rounded-2xl border bg-card p-6 text-center sm:p-8">
         <CheckCircle2 className="mx-auto mb-3 size-14 text-primary" />
-        <h2 className="text-2xl font-extrabold">الحجز تم</h2>
+        <h2 className="text-2xl font-extrabold">تم الحجز</h2>
         <p className="mt-1 text-muted-foreground">
-          اتدفع {formatMoney(result.amount)}{" "}
-          {method === "cash" ? "كاش" : "فيزا"}
+          تم دفع {formatMoney(result.amount)}{" "}
+          {method === "cash" ? "نقدًا" : "بطاقة"}
         </p>
         <dl className="my-6 grid gap-3 rounded-xl bg-muted/50 p-4 text-start text-sm">
           {[
             ["المريض", personName],
-            ["الدكتور", doctor.full_name],
+            ["الطبيب", doctor.full_name],
             ["اليوم", formatDay(date)],
             [
-              "الميعاد",
+              "الموعد",
               `${formatTime(slot.start_time)} – ${formatTime(slot.end_time)}`,
             ],
           ].map(([k, v]) => (
@@ -230,9 +230,9 @@ export function ClinicBooking({ doctors }: { doctors: BookableDoctor[] }) {
           </div>
         </dl>
         <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
-          <Button onClick={startOver}>احجز لمريض تاني</Button>
+          <Button onClick={startOver}>احجز لمريض آخر</Button>
           <Button variant="outline" asChild>
-            <Link href={`/nurse?date=${date}`}>حجوزات اليوم ده</Link>
+            <Link href={`/nurse?date=${date}`}>حجوزات هذا اليوم</Link>
           </Button>
         </div>
       </div>
@@ -261,7 +261,7 @@ export function ClinicBooking({ doctors }: { doctors: BookableDoctor[] }) {
           className="flex max-w-md flex-wrap items-end gap-2"
         >
           <div className="grid flex-1 gap-1">
-            <Label htmlFor="phone">رقم الموبايل</Label>
+            <Label htmlFor="phone">رقم الهاتف</Label>
             <Input
               id="phone"
               inputMode="numeric"
@@ -273,7 +273,7 @@ export function ClinicBooking({ doctors }: { doctors: BookableDoctor[] }) {
             />
           </div>
           <Button type="submit" disabled={searching}>
-            {searching ? <Loader2 className="animate-spin" /> : <Search />} دوّر
+            {searching ? <Loader2 className="animate-spin" /> : <Search />} بحث
           </Button>
           {phoneError && (
             <p className="w-full text-sm text-destructive">{phoneError}</p>
@@ -300,7 +300,7 @@ export function ClinicBooking({ doctors }: { doctors: BookableDoctor[] }) {
               aria-invalid={guestName.length > 0 && guestName.trim().length < 3}
             />
             {guestName.length > 0 && guestName.trim().length < 3 && (
-              <p className="text-sm text-destructive">الاسم 3 حروف على الأقل</p>
+              <p className="text-sm text-destructive">الاسم 3 أحرف على الأقل</p>
             )}
           </div>
         )}
@@ -309,10 +309,10 @@ export function ClinicBooking({ doctors }: { doctors: BookableDoctor[] }) {
       {/* ===== 2) الدكتور واليوم والميعاد ===== */}
       {personReady && (
         <section>
-          <StepTitle n={2} title="الدكتور والميعاد" />
+          <StepTitle n={2} title="الطبيب والموعد" />
 
           <Label htmlFor="doctor" className="mb-1">
-            الدكتور
+            الطبيب
           </Label>
           <select
             id="doctor"
@@ -320,7 +320,7 @@ export function ClinicBooking({ doctors }: { doctors: BookableDoctor[] }) {
             onChange={(e) => chooseDoctor(e.target.value)}
             className="mb-6 h-9 w-full max-w-md rounded-md border border-input bg-transparent px-3 text-sm"
           >
-            <option value="">اختاري الدكتور</option>
+            <option value="">اختاري الطبيب</option>
             {doctors.map((d) => (
               <option key={d.id} value={d.id}>
                 {d.full_name} · {d.doctors.specialty} ·{" "}
@@ -359,12 +359,12 @@ export function ClinicBooking({ doctors }: { doctors: BookableDoctor[] }) {
               )}
               {loadingSlots && (
                 <p className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Loader2 className="size-4 animate-spin" /> بنجيب المواعيد…
+                  <Loader2 className="size-4 animate-spin" /> جارٍ تحميل المواعيد…
                 </p>
               )}
               {slots && slots.length === 0 && (
                 <p className="rounded-lg border border-dashed p-4 text-sm text-muted-foreground">
-                  مفيش مواعيد فاضية في اليوم ده
+                  لا توجد مواعيد متاحة في هذا اليوم
                 </p>
               )}
               {slots && slots.length > 0 && (
@@ -406,8 +406,8 @@ export function ClinicBooking({ doctors }: { doctors: BookableDoctor[] }) {
           <div className="grid grid-cols-2 gap-2">
             {(
               [
-                ["cash", "كاش", Banknote],
-                ["card", "فيزا (مكنة العيادة)", CreditCard],
+                ["cash", "نقدًا", Banknote],
+                ["card", "بطاقة (جهاز العيادة)", CreditCard],
               ] as const
             ).map(([value, label, Icon]) => (
               <button
@@ -429,7 +429,7 @@ export function ClinicBooking({ doctors }: { doctors: BookableDoctor[] }) {
           <Button size="lg" onClick={book} disabled={pending}>
             {pending ? <Loader2 className="animate-spin" /> : null}
             {pending
-              ? "جاري الحجز…"
+              ? "جارٍ الحجز…"
               : `احجز · ${formatMoney(doctor.doctors.consultation_fee)}`}
           </Button>
         </section>

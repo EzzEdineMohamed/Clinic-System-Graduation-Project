@@ -103,7 +103,7 @@ export function DoctorDetailsDialog({ doctor }: { doctor: DoctorRow }) {
       ? {}
       : fieldErrorsOf(parsed.error);
     if (!days.some((d) => d.on))
-      errors.schedule = ["اختار يوم شغل واحد على الأقل"];
+      errors.schedule = ["اختر يوم عمل واحدًا على الأقل"];
     else if (days.some((d) => dayProblem(d)))
       errors.schedule = ["فيه يوم مواعيده غلط، صلّحه الأول"];
     setFe(errors);
@@ -111,7 +111,7 @@ export function DoctorDetailsDialog({ doctor }: { doctor: DoctorRow }) {
     setError(undefined);
 
     const token = getAccessToken();
-    if (!token) return setError("الجلسة خلصت، اعمل Refresh للصفحة وجرب تاني");
+    if (!token) return setError("انتهت الجلسة، أعد تحميل الصفحة وحاول مرة أخرى");
 
     // 2. الأيام المعلّم عليها بس، بالشكل اللي الداتابيز مستنياه
     const schedule: ScheduleDay[] = days.flatMap((d, i) =>
@@ -152,7 +152,7 @@ export function DoctorDetailsDialog({ doctor }: { doctor: DoctorRow }) {
             info ? "" : "border-amber-400 text-amber-700 hover:text-amber-800"
           }
         >
-          <Stethoscope /> {info ? "بيانات الكشف" : "كمّل البيانات"}
+          <Stethoscope /> {info ? "بيانات الكشف" : "استكمال البيانات"}
         </Button>
       </DialogTrigger>
 
@@ -160,7 +160,7 @@ export function DoctorDetailsDialog({ doctor }: { doctor: DoctorRow }) {
         <DialogHeader>
           <DialogTitle>بيانات الكشف: {doctor.full_name}</DialogTitle>
           <DialogDescription>
-            التخصص والسعر ومواعيد الشغل اللي المرضى هيحجزوا فيها.
+            التخصص والسعر ومواعيد العمل التي سيحجز فيها المرضى.
           </DialogDescription>
         </DialogHeader>
 
@@ -282,7 +282,7 @@ export function DoctorDetailsDialog({ doctor }: { doctor: DoctorRow }) {
                             aria-invalid={!!problem}
                           />
                           <span className="text-sm text-muted-foreground">
-                            لـ
+                            إلى
                           </span>
                           <Input
                             type="time"
@@ -310,7 +310,7 @@ export function DoctorDetailsDialog({ doctor }: { doctor: DoctorRow }) {
               <FieldError errors={fe.schedule} />
             </div>
 
-            <SubmitButton pending={pending} pendingText="جاري الحفظ…">
+            <SubmitButton pending={pending} pendingText="جارٍ الحفظ…">
               حفظ
             </SubmitButton>
           </fieldset>

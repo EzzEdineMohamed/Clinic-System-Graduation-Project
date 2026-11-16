@@ -50,7 +50,7 @@ export function CancelBooking({ booking }: { booking: DayBooking }) {
   async function onConfirm(e: React.MouseEvent) {
     e.preventDefault(); // AlertDialogAction بيقفل لوحده، وإحنا عايزينه يستنى الرد
     const token = getAccessToken();
-    if (!token) return setError("الجلسة خلصت، اعمل Refresh للصفحة وجرب تاني");
+    if (!token) return setError("انتهت الجلسة، أعد تحميل الصفحة وحاول مرة أخرى");
 
     setPending(true);
     try {
@@ -89,12 +89,12 @@ export function CancelBooking({ booking }: { booking: DayBooking }) {
               </AlertDialogTitle>
               <AlertDialogDescription>
                 {done.refund_amount > 0
-                  ? `رجّعي للمريض ${formatMoney(done.refund_amount)}، والميعاد بقى فاضي لحجز تاني.`
-                  : "الميعاد بقى فاضي لحجز تاني."}
+                  ? `أعيدي للمريض ${formatMoney(done.refund_amount)}، وأصبح الموعد متاحًا لحجز جديد.`
+                  : "أصبح الموعد متاحًا لحجز جديد."}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogAction>تمام</AlertDialogAction>
+              <AlertDialogAction>حسنًا</AlertDialogAction>
             </AlertDialogFooter>
           </>
         ) : (
@@ -103,8 +103,7 @@ export function CancelBooking({ booking }: { booking: DayBooking }) {
               <AlertDialogTitle>إلغاء حجز {person.name}؟</AlertDialogTitle>
               <AlertDialogDescription>
                 الساعة {formatTime(booking.start_time)} مع{" "}
-                {booking.doctor.profile.full_name}. الحجز هيتعلم ملغي، والفلوس
-                هتتسجل إنها رجعت للمريض.
+                {booking.doctor.profile.full_name}. سيُسجَّل الحجز ملغيًا، ويُسجَّل المبلغ مستردًا للمريض.
               </AlertDialogDescription>
             </AlertDialogHeader>
             {error && (
@@ -120,7 +119,7 @@ export function CancelBooking({ booking }: { booking: DayBooking }) {
                 disabled={pending}
                 className="bg-destructive text-white hover:bg-destructive/90"
               >
-                {pending ? "استني…" : "أيوه، ألغي الحجز"}
+                {pending ? "جارٍ التنفيذ…" : "نعم، ألغِ الحجز"}
               </AlertDialogAction>
             </AlertDialogFooter>
           </>

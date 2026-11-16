@@ -8,7 +8,7 @@ export function PageLoading({ cards = 0 }: { cards?: number }) {
       aria-live="polite"
       className="animate-in fade-in duration-300"
     >
-      <span className="sr-only">جاري التحميل…</span>
+      <span className="sr-only">جارٍ التحميل…</span>
       <Skeleton className="mb-2 h-8 w-48" />
       <Skeleton className="mb-8 h-4 w-72 max-w-full" />
       {cards > 0 && (

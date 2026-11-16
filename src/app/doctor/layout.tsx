@@ -5,7 +5,7 @@ export default async function DoctorLayout({ children }: { children: React.React
   const user = await requireRole("doctor");
   return (
     <>
-      <AppHeader user={user} items={[{ href: "/doctor", label: "مرضى النهارده" }]} />
+      <AppHeader user={user} items={[{ href: "/doctor", label: "مرضى اليوم" }]} />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6">{children}</main>
     </>
   );

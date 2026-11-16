@@ -20,17 +20,17 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           <h2 className="text-4xl leading-[1.35] font-extrabold">
             احجز كشفك في دقيقة،
             <br />
-            وتابع روشتتك من بيتك.
+            وتابع وصفتك الطبية من منزلك.
           </h2>
           <ul className="space-y-4 text-sidebar-foreground/80">
             <li className="flex items-center gap-3">
-              <CalendarCheck className="size-5 text-primary" /> مواعيد الدكاترة كلها قدامك
+              <CalendarCheck className="size-5 text-primary" /> مواعيد جميع الأطباء أمامك
             </li>
             <li className="flex items-center gap-3">
-              <FileText className="size-5 text-primary" /> الروشتة والتشخيص في سجلك
+              <FileText className="size-5 text-primary" /> الوصفة الطبية والتشخيص في سجلك
             </li>
             <li className="flex items-center gap-3">
-              <ShieldCheck className="size-5 text-primary" /> بياناتك محدش يشوفها غيرك وغير دكتورك
+              <ShieldCheck className="size-5 text-primary" /> بياناتك لا يطّلع عليها أحد سواك وسوى طبيبك
             </li>
           </ul>
         </div>

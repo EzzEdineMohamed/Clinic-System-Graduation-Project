@@ -17,8 +17,8 @@ import { Field, FieldError, FieldHint } from "@/components/ui/field";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-const DUPLICATE_EMAIL = "للأسف الأيميل ده متسجل قبل كده، مينفعش تسجل بيه تاني. جرب تسجل دخول.";
-const DUPLICATE_PHONE = "رقم الموبايل ده متسجل قبل كده، مينفعش تعمل بيه حساب جديد. لو ده رقمك كلّم العيادة.";
+const DUPLICATE_EMAIL = "هذا البريد الإلكتروني مسجّل مسبقًا، ولا يمكن التسجيل به مرة أخرى. جرّب تسجيل الدخول.";
+const DUPLICATE_PHONE = "رقم الهاتف هذا مسجّل مسبقًا، ولا يمكن إنشاء حساب جديد به. إذا كان هذا رقمك فتواصل مع العيادة.";
 
 export function RegisterForm() {
   const router = useRouter();
@@ -62,14 +62,14 @@ export function RegisterForm() {
       if (res.identities?.length === 0) {
         setFe({ email: [DUPLICATE_EMAIL] });
       } else {
-        setSuccess("اتبعتلك رسالة على الأيميل، أكد الحساب منها وبعدين سجل دخول.");
+        setSuccess("أُرسلت إليك رسالة على بريدك الإلكتروني، أكّد الحساب منها ثم سجّل الدخول.");
       }
       setPending(false);
     } catch (err) {
       if (err instanceof ApiError && (err.code === "user_already_exists" || err.code === "email_exists")) {
         setFe({ email: [DUPLICATE_EMAIL] });
       } else if (err instanceof ApiError && err.code === "weak_password") {
-        setFe({ password: ["الباسوورد ضعيف، استخدم حروف وأرقام"] });
+        setFe({ password: ["كلمة المرور ضعيفة، استخدم حروفًا وأرقامًا"] });
       } else {
         setError(authErrorMessage(err));
       }
@@ -109,12 +109,12 @@ export function RegisterForm() {
 
         <div className="grid gap-5 sm:grid-cols-2">
           <Field>
-            <Label htmlFor="email">الأيميل</Label>
+            <Label htmlFor="email">البريد الإلكتروني</Label>
             <Input id="email" name="email" type="email" dir="ltr" autoComplete="email" aria-invalid={!!fe.email} />
             <FieldError errors={fe.email} />
           </Field>
           <Field>
-            <Label htmlFor="phone">رقم الموبايل</Label>
+            <Label htmlFor="phone">رقم الهاتف</Label>
             <Input id="phone" name="phone" type="tel" dir="ltr" inputMode="numeric" autoComplete="tel" placeholder="01xxxxxxxxx" aria-invalid={!!fe.phone} />
             <FieldError errors={fe.phone} />
           </Field>
@@ -122,12 +122,12 @@ export function RegisterForm() {
 
         <div className="grid gap-5 sm:grid-cols-2">
           <Field>
-            <Label htmlFor="password">الباسوورد</Label>
+            <Label htmlFor="password">كلمة المرور</Label>
             <Input id="password" name="password" type="password" dir="ltr" autoComplete="new-password" aria-invalid={!!fe.password} />
             <FieldError errors={fe.password} />
           </Field>
           <Field>
-            <Label htmlFor="confirm_password">تأكيد الباسوورد</Label>
+            <Label htmlFor="confirm_password">تأكيد كلمة المرور</Label>
             <Input id="confirm_password" name="confirm_password" type="password" dir="ltr" autoComplete="new-password" aria-invalid={!!fe.confirm_password} />
             <FieldError errors={fe.confirm_password} />
           </Field>
@@ -157,19 +157,19 @@ export function RegisterForm() {
           <Label htmlFor="chronic_disease">
             مرض مزمن <span className="font-normal text-muted-foreground">(اختياري)</span>
           </Label>
-          <Input id="chronic_disease" name="chronic_disease" placeholder="مثلاً: سكر، ضغط" aria-invalid={!!fe.chronic_disease} />
-          <FieldHint>سيبها فاضية لو مفيش</FieldHint>
+          <Input id="chronic_disease" name="chronic_disease" placeholder="مثال: السكري، الضغط" aria-invalid={!!fe.chronic_disease} />
+          <FieldHint>اتركه فارغًا إن لم يوجد</FieldHint>
           <FieldError errors={fe.chronic_disease} />
         </Field>
 
-        <SubmitButton size="lg" pending={pending} pendingText="جاري إنشاء الحساب…" className="mt-2">
+        <SubmitButton size="lg" pending={pending} pendingText="جارٍ إنشاء الحساب…" className="mt-2">
           إنشاء الحساب
         </SubmitButton>
 
         <p className="text-center text-sm text-muted-foreground">
-          عندك حساب؟{" "}
+          لديك حساب؟{" "}
           <Link href="/login" className="font-semibold text-primary hover:underline">
-            سجل دخول
+            سجّل الدخول
           </Link>
         </p>
       </fieldset>

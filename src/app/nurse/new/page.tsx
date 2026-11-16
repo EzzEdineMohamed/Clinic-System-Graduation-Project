@@ -30,7 +30,7 @@ export default async function NurseNewBooking() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <PageTitle
           title="حجز جديد"
-          subtitle="للمريض اللي في العيادة: كاش أو فيزا"
+          subtitle="للمريض الحاضر في العيادة: نقدًا أو بالبطاقة"
         />
         <Button variant="outline" asChild>
           <Link href="/nurse">

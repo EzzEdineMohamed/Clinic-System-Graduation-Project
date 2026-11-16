@@ -66,7 +66,7 @@ export const adminApi = {
     );
     // لو الـ RLS منع التعديل، Supabase مش بيرجع error، بيرجع لستة فاضية
     if (rows.length === 0)
-      throw new ApiError(403, "forbidden", "مش مسموحلك تعدّل الحساب ده");
+      throw new ApiError(403, "forbidden", "غير مسموح لك بتعديل هذا الحساب");
     return rows[0];
   },
 

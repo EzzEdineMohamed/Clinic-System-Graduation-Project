@@ -20,7 +20,7 @@ export function AttendButton({ appointmentId }: { appointmentId: string }) {
 
   async function onClick() {
     const token = getAccessToken();
-    if (!token) return setError("الجلسة خلصت، اعمل Refresh للصفحة");
+    if (!token) return setError("انتهت الجلسة، أعد تحميل الصفحة");
 
     setPending(true);
     setError(undefined);
@@ -37,7 +37,7 @@ export function AttendButton({ appointmentId }: { appointmentId: string }) {
   return (
     <div className="grid justify-items-start gap-1">
       <Button size="sm" onClick={onClick} disabled={pending}>
-        <UserCheck /> {pending ? "استنى…" : "حضر"}
+        <UserCheck /> {pending ? "جارٍ التنفيذ…" : "حضر"}
       </Button>
       {error && <p className="text-xs text-destructive">{error}</p>}
     </div>

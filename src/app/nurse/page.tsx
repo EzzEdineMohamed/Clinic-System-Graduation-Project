@@ -98,13 +98,13 @@ export default async function NurseBookings({
             />
           </label>
           <label className="grid gap-1 text-sm">
-            الدكتور
+            الطبيب
             <select
               name="doctor"
               defaultValue={doctorId ?? ""}
               className="h-9 rounded-md border border-input bg-transparent px-3 text-sm"
             >
-              <option value="">كل الدكاترة</option>
+              <option value="">جميع الأطباء</option>
               {doctors.map((d) => (
                 <option key={d.id} value={d.id}>
                   {d.full_name} · {d.doctors.specialty}
@@ -119,13 +119,13 @@ export default async function NurseBookings({
 
         <div className="flex gap-1">
           <Button variant="outline" size="sm" asChild>
-            <Link href={dayHref(addDays(date, -1))}>اليوم اللي قبله</Link>
+            <Link href={dayHref(addDays(date, -1))}>اليوم السابق</Link>
           </Button>
           <Button variant="outline" size="sm" asChild>
-            <Link href={dayHref(today)}>النهارده</Link>
+            <Link href={dayHref(today)}>اليوم</Link>
           </Button>
           <Button variant="outline" size="sm" asChild>
-            <Link href={dayHref(addDays(date, 1))}>اليوم اللي بعده</Link>
+            <Link href={dayHref(addDays(date, 1))}>اليوم التالي</Link>
           </Button>
         </div>
       </div>
@@ -141,10 +141,10 @@ export default async function NurseBookings({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>الميعاد</TableHead>
+              <TableHead>الموعد</TableHead>
               <TableHead>المريض</TableHead>
-              <TableHead>الموبايل</TableHead>
-              <TableHead>الدكتور</TableHead>
+              <TableHead>الهاتف</TableHead>
+              <TableHead>الطبيب</TableHead>
               <TableHead>الحجز</TableHead>
               <TableHead>الدفع</TableHead>
               <TableHead>الحالة</TableHead>
@@ -158,7 +158,7 @@ export default async function NurseBookings({
                   colSpan={8}
                   className="py-10 text-center text-muted-foreground"
                 >
-                  مفيش حجوزات في اليوم ده
+                  لا توجد حجوزات في هذا اليوم
                 </TableCell>
               </TableRow>
             )}
@@ -176,7 +176,7 @@ export default async function NurseBookings({
                   <TableCell>
                     <span className="font-semibold">{person.name}</span>{" "}
                     {!person.hasFile && (
-                      <Badge variant="secondary">من غير ملف</Badge>
+                      <Badge variant="secondary">بدون ملف</Badge>
                     )}
                   </TableCell>
                   <TableCell dir="rtl" className="text-start">
@@ -189,14 +189,14 @@ export default async function NurseBookings({
                     </div>
                   </TableCell>
                   <TableCell>
-                    {b.source === "online" ? "أونلاين" : "العيادة"}
+                    {b.source === "online" ? "عبر الإنترنت" : "العيادة"}
                   </TableCell>
                   <TableCell>
                     {formatMoney(b.fee)}
                     {b.payment && (
                       <div className="text-xs text-muted-foreground">
-                        {b.payment.method === "card" ? "فيزا" : "كاش"}
-                        {b.payment.status === "refunded" && " · اترجع"}
+                        {b.payment.method === "card" ? "بطاقة" : "نقدًا"}
+                        {b.payment.status === "refunded" && " · مُسترد"}
                       </div>
                     )}
                   </TableCell>

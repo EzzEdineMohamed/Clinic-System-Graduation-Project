@@ -34,7 +34,7 @@ export function LogoutButton({ className, compact = false }: { className?: strin
       aria-label="تسجيل الخروج"
     >
       {pending ? <Loader2 className="animate-spin" /> : <LogOut className="rtl:-scale-x-100" />}
-      {!compact && (pending ? "جاري الخروج…" : "تسجيل الخروج")}
+      {!compact && (pending ? "جارٍ تسجيل الخروج…" : "تسجيل الخروج")}
     </Button>
   );
 }

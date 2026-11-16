@@ -66,7 +66,7 @@ export function BookingFlow({ doctors }: { doctors: BookableDoctor[] }) {
     setError(undefined);
 
     const token = getAccessToken();
-    if (!token) return setError("الجلسة خلصت، اعمل Refresh للصفحة وجرب تاني");
+    if (!token) return setError("انتهت الجلسة، أعد تحميل الصفحة وحاول مرة أخرى");
 
     const id = ++lastRequest.current;
     setLoading(true);
@@ -106,7 +106,7 @@ export function BookingFlow({ doctors }: { doctors: BookableDoctor[] }) {
   if (doctors.length === 0) {
     return (
       <div className="rounded-xl border border-dashed bg-card p-8 text-center text-muted-foreground">
-        مفيش دكاترة متاحين للحجز دلوقتي
+        لا يوجد أطباء متاحون للحجز حاليًا
       </div>
     );
   }
@@ -131,7 +131,7 @@ export function BookingFlow({ doctors }: { doctors: BookableDoctor[] }) {
     <div className="grid gap-10">
       {/* ===== 1) الدكتور ===== */}
       <section>
-        <StepTitle n={1} title="اختار الدكتور" />
+        <StepTitle n={1} title="اختر الطبيب" />
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {doctors.map((d) => {
             const selected = doctor?.id === d.id;
@@ -176,10 +176,10 @@ export function BookingFlow({ doctors }: { doctors: BookableDoctor[] }) {
       {/* ===== 2) اليوم والميعاد ===== */}
       {doctor && (
         <section>
-          <StepTitle n={2} title="اختار اليوم والميعاد" />
+          <StepTitle n={2} title="اختر اليوم والموعد" />
 
           <p className="mb-2 flex items-center gap-2 text-sm font-semibold">
-            <CalendarDays className="size-4" /> الأيام المتاحة (لحد 30 يوم قدام)
+            <CalendarDays className="size-4" /> الأيام المتاحة (حتى 30 يومًا قادمة)
           </p>
           <div className="mb-6 flex flex-wrap gap-2">
             {days.map((day) => (
@@ -202,13 +202,13 @@ export function BookingFlow({ doctors }: { doctors: BookableDoctor[] }) {
           {date && (
             <>
               <p className="mb-2 flex items-center gap-2 text-sm font-semibold">
-                <Clock className="size-4" /> المواعيد الفاضية يوم{" "}
+                <Clock className="size-4" /> المواعيد المتاحة يوم{" "}
                 {formatDay(date)}
               </p>
 
               {loading && (
                 <p className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Loader2 className="size-4 animate-spin" /> بنجيب المواعيد…
+                  <Loader2 className="size-4 animate-spin" /> جارٍ تحميل المواعيد…
                 </p>
               )}
 
@@ -228,7 +228,7 @@ export function BookingFlow({ doctors }: { doctors: BookableDoctor[] }) {
 
               {slots && slots.length === 0 && (
                 <p className="rounded-lg border border-dashed p-4 text-sm text-muted-foreground">
-                  مفيش مواعيد فاضية في اليوم ده، جرّب يوم تاني
+                  لا توجد مواعيد متاحة في هذا اليوم، جرّب يومًا آخر
                 </p>
               )}
 
@@ -263,7 +263,7 @@ export function BookingFlow({ doctors }: { doctors: BookableDoctor[] }) {
           <StepTitle n={3} title="الملخص والدفع" />
           <dl className="mb-4 grid gap-2 rounded-xl border bg-card p-4 text-sm sm:grid-cols-2">
             <div>
-              <dt className="text-muted-foreground">الدكتور</dt>
+              <dt className="text-muted-foreground">الطبيب</dt>
               <dd className="font-semibold">
                 {doctor.full_name} · {doctor.doctors.specialty}
               </dd>
@@ -273,7 +273,7 @@ export function BookingFlow({ doctors }: { doctors: BookableDoctor[] }) {
               <dd className="font-semibold">{formatDay(date)}</dd>
             </div>
             <div>
-              <dt className="text-muted-foreground">الميعاد</dt>
+              <dt className="text-muted-foreground">الموعد</dt>
               <dd className="font-semibold">
                 {formatTime(slot.start_time)} – {formatTime(slot.end_time)}
               </dd>

@@ -46,14 +46,14 @@ export const loginSchema = z.object({
   //                     عمل paste وجه معاه مسافة.
   // .toLowerCase()   → بيصغّر الحروف: Ahmed@Gmail.com تبقى ahmed@gmail.com
   //                     علشان الأيميل يطابق اللي متسجل.
-  email: z.email("اكتب أيميل صحيح").trim().toLowerCase(),
+  email: z.email("أدخل بريدًا إلكترونيًا صحيحًا").trim().toLowerCase(),
 
   // z.string()       → لازم يبقى نص.
   // .min(1, "...")   → على الأقل حرف واحد، يعني مش فاضي.
   // ملحوظة: في الـ Login مش بنتشيك على طول الباسوورد (8 حروف مثلاً)،
   // لأن ده شغل صفحة الـ Register. هنا بس بنتأكد إنه اتكتب، والسيرفر
   // هو اللي يقول صح ولا غلط.
-  password: z.string().min(1, "اكتب الباسوورد"),
+  password: z.string().min(1, "أدخل كلمة المرور"),
 });
 
 // =====================================================================
@@ -71,10 +71,10 @@ export const registerSchema = z
     full_name: z
       .string()
       .trim()
-      .min(3, "الاسم لازم يكون 3 حروف على الأقل")
-      .max(80, "الاسم طويل زيادة"),
+      .min(3, "يجب أن يتكون الاسم من 3 أحرف على الأقل")
+      .max(80, "الاسم طويل جدًا"),
     // الأيميل: نفس قاعدة الـ Login بالظبط.
-    email: z.email("اكتب أيميل صحيح").trim().toLowerCase(),
+    email: z.email("أدخل بريدًا إلكترونيًا صحيحًا").trim().toLowerCase(),
 
     // الموبايل:
     // .regex(EG_MOBILE, ...) → لازم يطابق الـ regex اللي فوق.
@@ -83,11 +83,11 @@ export const registerSchema = z
     phone: z
       .string()
       .trim()
-      .regex(EG_MOBILE, "رقم موبايل مصري صحيح (11 رقم يبدأ بـ 01)"),
+      .regex(EG_MOBILE, "رقم هاتف مصري صحيح (11 رقمًا يبدأ بـ 01)"),
 
     // الباسوورد: 8 حروف على الأقل.
     // مش بنعمل .trim() هنا، لأن المسافة ممكن تكون جزء من الباسوورد فعلاً.
-    password: z.string().min(8, "الباسوورد لازم يكون 8 حروف على الأقل"),
+    password: z.string().min(8, "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل"),
 
     // تأكيد الباسوورد: هنا بس بنقول إنه نص. المقارنة بالباسوورد نفسه
     // بتحصل تحت في .refine، لأن الخانة لوحدها متعرفش قيمة الخانة التانية.
@@ -97,7 +97,7 @@ export const registerSchema = z
     // z.enum([...]) → القيمة لازم تبقى واحدة من دول بالظبط. نفس قيم الـ enum
     // اللي اسمه gender في الداتابيز. لو اليوزر ماختارش حاجة، القيمة بتيجي
     // فاضية، فـ zod يرجع الرسالة "اختار النوع".
-    gender: z.enum(["male", "female"], "اختار النوع"),
+    gender: z.enum(["male", "female"], "اختر النوع"),
 
     // تاريخ الميلاد:
     // z.iso.date(...) → لازم يبقى تاريخ بصيغة YYYY-MM-DD، زي 1990-05-01.
@@ -105,7 +105,7 @@ export const registerSchema = z
     // .refine(دالة, رسالة) → تشييك إحنا بنكتبه بنفسنا: الدالة بترجع
     //                   true لو القيمة تمام، و false لو لأ.
     //                   هنا: التاريخ مش في المستقبل، ومش أقدم من 120 سنة.
-    date_of_birth: z.iso.date("اختار تاريخ الميلاد").refine((d) => {
+    date_of_birth: z.iso.date("اختر تاريخ الميلاد").refine((d) => {
       const date = new Date(d);
       const now = new Date();
       const oldest = new Date(
@@ -114,7 +114,7 @@ export const registerSchema = z
         now.getDate(),
       );
       return date <= now && date >= oldest;
-    }, "تاريخ الميلاد مش منطقي"),
+    }, "تاريخ الميلاد غير منطقي"),
 
     // المرض المزمن (اختياري):
     // .max(200, ...)  → 200 حرف بالكتير.
@@ -124,7 +124,7 @@ export const registerSchema = z
     chronic_disease: z
       .string()
       .trim()
-      .max(200, "الوصف طويل زيادة")
+      .max(200, "الوصف طويل جدًا")
       .optional()
       .default(""),
   })
@@ -136,7 +136,7 @@ export const registerSchema = z
   //         (من غير path، الرسالة مش هتبقى تحت أي خانة).
   .refine((v) => v.password === v.confirm_password, {
     path: ["confirm_password"],
-    message: "الباسوورد مش متطابق",
+    message: "كلمتا المرور غير متطابقتين",
   });
 
 // =====================================================================

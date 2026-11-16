@@ -72,7 +72,7 @@ export function PaymentForm({
 
     // 2) التوكن
     const token = getAccessToken();
-    if (!token) return setError("الجلسة خلصت، اعمل Refresh للصفحة وجرب تاني");
+    if (!token) return setError("انتهت الجلسة، أعد تحميل الصفحة وحاول مرة أخرى");
 
     // 3) الحجز والدفع
     setPending(true);
@@ -108,7 +108,7 @@ export function PaymentForm({
     >
       <fieldset disabled={pending} className="contents">
         <p className="flex items-center gap-2 font-bold">
-          <CreditCard className="size-5 text-primary" /> الدفع بالفيزا
+          <CreditCard className="size-5 text-primary" /> الدفع بالبطاقة
         </p>
 
         {error && (
@@ -166,7 +166,7 @@ export function PaymentForm({
           </Field>
         </div>
 
-        <SubmitButton pending={pending} pendingText="جاري الدفع…" size="lg">
+        <SubmitButton pending={pending} pendingText="جارٍ الدفع…" size="lg">
           ادفع واحجز · {formatMoney(doctor.doctors.consultation_fee)}
         </SubmitButton>
       </fieldset>

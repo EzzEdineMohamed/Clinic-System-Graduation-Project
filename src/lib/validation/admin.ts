@@ -12,14 +12,14 @@ export const staffSchema = z.object({
   full_name: z
     .string()
     .trim()
-    .min(3, "الاسم لازم يكون 3 حروف على الأقل")
-    .max(80, "الاسم طويل زيادة"),
-  email: z.email("اكتب أيميل صحيح").trim().toLowerCase(),
+    .min(3, "يجب أن يتكون الاسم من 3 أحرف على الأقل")
+    .max(80, "الاسم طويل جدًا"),
+  email: z.email("أدخل بريدًا إلكترونيًا صحيحًا").trim().toLowerCase(),
   phone: z
     .string()
     .trim()
-    .regex(EG_MOBILE, "رقم موبايل مصري صحيح (11 رقم يبدأ بـ 01)"),
-  password: z.string().min(8, "الباسوورد لازم يكون 8 حروف على الأقل"),
+    .regex(EG_MOBILE, "رقم هاتف مصري صحيح (11 رقمًا يبدأ بـ 01)"),
+  password: z.string().min(8, "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل"),
 });
 
 /** فورم تعديل موظف: الاسم والموبايل بس */
@@ -33,19 +33,19 @@ export const doctorDetailsSchema = z.object({
   specialty: z
     .string()
     .trim()
-    .min(2, "اكتب التخصص")
-    .max(60, "التخصص طويل زيادة"),
+    .min(2, "أدخل التخصص")
+    .max(60, "التخصص طويل جدًا"),
   consultation_fee: z.coerce
-    .number({ error: "اكتب رقم" })
-    .positive("السعر لازم يكون أكبر من صفر")
-    .max(100000, "السعر كبير زيادة"),
+    .number({ error: "أدخل رقمًا" })
+    .positive("يجب أن يكون السعر أكبر من صفر")
+    .max(100000, "السعر كبير جدًا"),
   clinic_share_percent: z.coerce
-    .number({ error: "اكتب رقم" })
-    .min(0, "النسبة من 0 لـ 100")
-    .max(100, "النسبة من 0 لـ 100"),
+    .number({ error: "أدخل رقمًا" })
+    .min(0, "النسبة من 0 إلى 100")
+    .max(100, "النسبة من 0 إلى 100"),
   slot_minutes: z.coerce
-    .number({ error: "اكتب رقم" })
-    .int("رقم صحيح من غير كسور")
-    .min(5, "من 5 لـ 120 دقيقة")
-    .max(120, "من 5 لـ 120 دقيقة"),
+    .number({ error: "أدخل رقمًا" })
+    .int("رقم صحيح بدون كسور")
+    .min(5, "من 5 إلى 120 دقيقة")
+    .max(120, "من 5 إلى 120 دقيقة"),
 });

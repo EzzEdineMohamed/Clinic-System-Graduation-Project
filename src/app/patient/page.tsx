@@ -25,7 +25,7 @@ export default async function PatientHome() {
   return (
     <>
       <PageTitle
-        title={`أهلاً ${(user.full_name ?? "").split(" ")[0]}`}
+        title={`مرحبًا ${(user.full_name ?? "").split(" ")[0]}`}
         subtitle="اختار الدكتور و المعاد المناسب "
       />
       {error ? (

@@ -6,7 +6,7 @@ export function ComingNext({ title, items }: { title: string; items: string[] })
     <div className="rounded-xl border border-dashed bg-card p-6 sm:p-8">
       <div className="mb-4 flex items-center gap-2 text-muted-foreground">
         <Hammer className="size-4" />
-        <span className="text-sm font-semibold">المرحلة الجاية</span>
+        <span className="text-sm font-semibold">المرحلة القادمة</span>
       </div>
       <h2 className="mb-3 text-lg font-bold">{title}</h2>
       <ul className="list-disc space-y-1 ps-5 text-sm text-muted-foreground">

@@ -86,7 +86,7 @@ export default async function AdminPatients({
             <TableHeader>
               <TableRow className="bg-muted/50">
                 <TableHead>المريض</TableHead>
-                <TableHead>الموبايل</TableHead>
+                <TableHead>الهاتف</TableHead>
                 <TableHead>النوع</TableHead>
                 <TableHead>السن</TableHead>
                 <TableHead>مرض مزمن</TableHead>
@@ -100,7 +100,7 @@ export default async function AdminPatients({
                   <TableCell>
                     <p className="font-semibold">{p.full_name}</p>
                     <Badge variant="outline" className="mt-1 text-[11px]">
-                      {p.profile_id ? "أونلاين" : "من العيادة"}
+                      {p.profile_id ? "عبر الإنترنت" : "من العيادة"}
                     </Badge>
                   </TableCell>
                   <TableCell dir="ltr" className="text-end">

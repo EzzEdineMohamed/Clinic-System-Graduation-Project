@@ -54,7 +54,7 @@ export function ChangePassword({ member }: { member: StaffMember }) {
     setError(undefined);
 
     const token = getAccessToken();
-    if (!token) return setError("الجلسة خلصت، اعمل Refresh للصفحة وجرب تاني");
+    if (!token) return setError("انتهت الجلسة، أعد تحميل الصفحة وحاول مرة أخرى");
 
     setPending(true);
     try {
@@ -93,12 +93,12 @@ export function ChangePassword({ member }: { member: StaffMember }) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         <Button variant="ghost" size="sm">
-          <KeyRound /> الباسوورد
+          <KeyRound /> كلمة المرور
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>باسوورد جديد لـ {member.full_name}</DialogTitle>
+          <DialogTitle>كلمة مرور جديدة لـ {member.full_name}</DialogTitle>
           <DialogDescription dir="ltr" className="text-start">
             {member.email}
           </DialogDescription>
@@ -110,7 +110,7 @@ export function ChangePassword({ member }: { member: StaffMember }) {
               <CheckCircle2 />
               <AlertDescription>{done}</AlertDescription>
             </Alert>
-            <Button onClick={() => onOpenChange(false)}>تمام</Button>
+            <Button onClick={() => onOpenChange(false)}>حسنًا</Button>
           </div>
         ) : (
           <form
@@ -128,7 +128,7 @@ export function ChangePassword({ member }: { member: StaffMember }) {
               )}
               <Field>
                 <Label htmlFor={`password-${member.id}`}>
-                  الباسوورد الجديد
+                  كلمة المرور الجديدة
                 </Label>
                 <Input
                   id={`password-${member.id}`}
@@ -139,12 +139,12 @@ export function ChangePassword({ member }: { member: StaffMember }) {
                   aria-invalid={!!fe.password}
                 />
                 <FieldHint>
-                  8 حروف على الأقل. الباسوورد القديم هيبطل يشتغل على طول.
+                  8 أحرف على الأقل. ستتوقف كلمة المرور القديمة عن العمل فورًا.
                 </FieldHint>
                 <FieldError errors={fe.password} />
               </Field>
-              <SubmitButton pending={pending} pendingText="جاري التغيير…">
-                غيّر الباسوورد
+              <SubmitButton pending={pending} pendingText="جارٍ التغيير…">
+                تغيير كلمة المرور
               </SubmitButton>
             </fieldset>
           </form>

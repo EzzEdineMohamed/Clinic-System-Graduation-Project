@@ -9,13 +9,13 @@ export default async function PatientProfile() {
 
   return (
     <>
-      <PageTitle title="البروفايل" />
+      <PageTitle title="الملف الشخصي" />
       <Card className="max-w-2xl py-2">
         <CardContent>
           <dl>
             <InfoRow label="الاسم" value={p.full_name} />
-            <InfoRow label="رقم الموبايل" value={p.phone} ltr />
-            <InfoRow label="الأيميل" value={p.email} ltr />
+            <InfoRow label="رقم الهاتف" value={p.phone} ltr />
+            <InfoRow label="البريد الإلكتروني" value={p.email} ltr />
             <InfoRow label="السن" value={p.date_of_birth ? `${ageFromDob(p.date_of_birth)} سنة` : "-"} />
             <InfoRow label="النوع" value={p.gender ? GENDER_LABEL[p.gender] : "-"} />
             <InfoRow label="مرض مزمن" value={p.chronic_disease || NONE} />

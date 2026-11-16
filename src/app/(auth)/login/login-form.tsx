@@ -42,7 +42,7 @@ export function LoginForm({ notice }: { notice?: string }) {
       if (!me || !me.is_active) {
         await api.logout(session.access_token).catch(() => {});
         clearSession();
-        setError("الحساب ده موقوف، كلم إدارة العيادة");
+        setError("هذا الحساب موقوف، يُرجى التواصل مع إدارة العيادة");
         setPending(false);
         return;
       }
@@ -67,25 +67,25 @@ export function LoginForm({ notice }: { notice?: string }) {
         )}
 
         <Field>
-          <Label htmlFor="email">الأيميل</Label>
+          <Label htmlFor="email">البريد الإلكتروني</Label>
           <Input id="email" name="email" type="email" dir="ltr" autoComplete="email" placeholder="name@example.com" aria-invalid={!!fe.email} />
           <FieldError errors={fe.email} />
         </Field>
 
         <Field>
-          <Label htmlFor="password">الباسوورد</Label>
+          <Label htmlFor="password">كلمة المرور</Label>
           <Input id="password" name="password" type="password" dir="ltr" autoComplete="current-password" aria-invalid={!!fe.password} />
           <FieldError errors={fe.password} />
         </Field>
 
-        <SubmitButton size="lg" pending={pending} pendingText="جاري تسجيل الدخول…" className="mt-2">
+        <SubmitButton size="lg" pending={pending} pendingText="جارٍ تسجيل الدخول…" className="mt-2">
           تسجيل الدخول
         </SubmitButton>
 
         <p className="text-center text-sm text-muted-foreground">
           مريض جديد؟{" "}
           <Link href="/register" className="font-semibold text-primary hover:underline">
-            اعمل حساب
+            أنشئ حسابًا
           </Link>
         </p>
       </fieldset>

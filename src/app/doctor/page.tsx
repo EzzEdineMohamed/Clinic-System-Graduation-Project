@@ -51,10 +51,10 @@ function StatCard({
 /** الحالة اللي بتظهر للدكتور */
 function statusOf(v: DoctorVisit) {
   if (v.status === "attended" && v.diagnosis)
-    return { label: "اتكشف", variant: "default" as const };
+    return { label: "تم الكشف", variant: "default" as const };
   if (v.status === "attended")
     return { label: "حضر", variant: "secondary" as const };
-  return { label: "منتظر", variant: "outline" as const };
+  return { label: "في الانتظار", variant: "outline" as const };
 }
 
 export default async function DoctorHome() {
@@ -73,14 +73,14 @@ export default async function DoctorHome() {
 
   return (
     <>
-      <PageTitle title="مرضى النهارده" subtitle={formatDay(today)} />
+      <PageTitle title="مرضى اليوم" subtitle={formatDay(today)} />
 
       <div className="mb-6 grid gap-3 sm:grid-cols-3">
-        <StatCard icon={Users} label="حجوزات النهارده" value={visits.length} />
+        <StatCard icon={Users} label="حجوزات اليوم" value={visits.length} />
         <StatCard icon={UserCheck} label="حضروا" value={attended} />
         <StatCard
           icon={Clock}
-          label="لسه منتظرين"
+          label="في الانتظار"
           value={visits.length - attended}
         />
       </div>
@@ -94,14 +94,14 @@ export default async function DoctorHome() {
       {!error && visits.length === 0 ? (
         <div className="grid justify-items-center gap-2 rounded-xl border border-dashed bg-card p-10 text-center">
           <CalendarCheck className="size-8 text-muted-foreground" />
-          <p className="text-muted-foreground">مفيش حجوزات النهارده</p>
+          <p className="text-muted-foreground">لا توجد حجوزات اليوم</p>
         </div>
       ) : (
         <div className="overflow-x-auto rounded-xl border bg-card">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>الميعاد</TableHead>
+                <TableHead>الموعد</TableHead>
                 <TableHead>المريض</TableHead>
                 <TableHead>السن والنوع</TableHead>
                 <TableHead>مرض مزمن</TableHead>
@@ -129,7 +129,7 @@ export default async function DoctorHome() {
                       </div>
                       {!person.hasAccount && (
                         <Badge variant="secondary" className="mt-1">
-                          من غير حساب · روشتة ورقي
+                          بدون حساب · وصفة ورقية
                         </Badge>
                       )}
                     </TableCell>

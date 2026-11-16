@@ -58,8 +58,8 @@ export default async function AdminNurses() {
             <TableHeader>
               <TableRow className="bg-muted/50">
                 <TableHead>الاسم</TableHead>
-                <TableHead>الأيميل</TableHead>
-                <TableHead>الموبايل</TableHead>
+                <TableHead>البريد الإلكتروني</TableHead>
+                <TableHead>الهاتف</TableHead>
                 <TableHead>تاريخ الإضافة</TableHead>
                 <TableHead>الحالة</TableHead>
                 <TableHead className="text-center">إجراءات</TableHead>

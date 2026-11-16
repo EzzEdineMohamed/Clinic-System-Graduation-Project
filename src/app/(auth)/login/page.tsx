@@ -5,12 +5,12 @@ export const metadata: Metadata = { title: "تسجيل الدخول | عيادت
 
 export default async function LoginPage({ searchParams }: PageProps<"/login">) {
   const { error } = await searchParams;
-  const notice = error === "inactive" ? "الحساب ده موقوف، كلم إدارة العيادة" : undefined;
+  const notice = error === "inactive" ? "هذا الحساب موقوف، يُرجى التواصل مع إدارة العيادة" : undefined;
 
   return (
     <>
-      <h1 className="text-3xl font-extrabold">أهلاً بيك</h1>
-      <p className="mt-2 mb-8 text-muted-foreground">سجل دخولك بالأيميل والباسوورد</p>
+      <h1 className="text-3xl font-extrabold">مرحبًا بك</h1>
+      <p className="mt-2 mb-8 text-muted-foreground">سجّل الدخول بالبريد الإلكتروني وكلمة المرور</p>
       <LoginForm notice={notice} />
     </>
   );

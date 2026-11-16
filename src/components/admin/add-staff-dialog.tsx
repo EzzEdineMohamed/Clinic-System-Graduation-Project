@@ -25,7 +25,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-const LABEL: Record<StaffRole, string> = { nurse: "سكرتيرة", doctor: "دكتور" };
+const LABEL: Record<StaffRole, string> = { nurse: "سكرتيرة", doctor: "طبيب" };
 
 export function AddStaffDialog({ role }: { role: StaffRole }) {
   const router = useRouter();
@@ -56,7 +56,7 @@ export function AddStaffDialog({ role }: { role: StaffRole }) {
 
     // 2. توكن الأدمن من الكوكي
     const token = getAccessToken();
-    if (!token) return setError("الجلسة خلصت، اعمل Refresh للصفحة وجرب تاني");
+    if (!token) return setError("انتهت الجلسة، أعد تحميل الصفحة وحاول مرة أخرى");
 
     setPending(true);
     try {
@@ -66,7 +66,7 @@ export function AddStaffDialog({ role }: { role: StaffRole }) {
       router.refresh(); // السيرفر يجيب اللستة من جديد
     } catch (err) {
       if (err instanceof ApiError && err.code === "email_exists") {
-        setFe({ email: ["الأيميل ده متسجل قبل كده"] });
+        setFe({ email: ["هذا البريد الإلكتروني مسجّل مسبقًا"] });
       } else if (
         err instanceof ApiError &&
         err.code === "validation_failed" &&
@@ -133,7 +133,7 @@ export function AddStaffDialog({ role }: { role: StaffRole }) {
 
             <div className="grid gap-4 sm:grid-cols-2">
               <Field>
-                <Label htmlFor="email">الأيميل</Label>
+                <Label htmlFor="email">البريد الإلكتروني</Label>
                 <Input
                   id="email"
                   name="email"
@@ -144,7 +144,7 @@ export function AddStaffDialog({ role }: { role: StaffRole }) {
                 <FieldError errors={fe.email} />
               </Field>
               <Field>
-                <Label htmlFor="phone">رقم الموبايل</Label>
+                <Label htmlFor="phone">رقم الهاتف</Label>
                 <Input
                   id="phone"
                   name="phone"
@@ -159,7 +159,7 @@ export function AddStaffDialog({ role }: { role: StaffRole }) {
             </div>
 
             <Field>
-              <Label htmlFor="password">الباسوورد</Label>
+              <Label htmlFor="password">كلمة المرور</Label>
               <Input
                 id="password"
                 name="password"
@@ -176,7 +176,7 @@ export function AddStaffDialog({ role }: { role: StaffRole }) {
 
             <SubmitButton
               pending={pending}
-              pendingText="جاري الإضافة…"
+              pendingText="جارٍ الإضافة…"
               className="mt-2 cursor-pointer"
             >
               إضافة

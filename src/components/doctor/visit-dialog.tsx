@@ -60,11 +60,11 @@ export function VisitDialog({ visit, doctorId }: Props) {
     setError(undefined);
     if (f && !PRESCRIPTION_TYPES[f.type]) {
       e.target.value = "";
-      return setError("الروشتة لازم تكون PDF أو صورة JPG أو PNG");
+      return setError("يجب أن تكون الوصفة الطبية ملف PDF أو صورة JPG أو PNG");
     }
     if (f && f.size > PRESCRIPTION_MAX_BYTES) {
       e.target.value = "";
-      return setError("حجم الروشتة أكبر من 5 ميجا");
+      return setError("حجم الوصفة الطبية أكبر من 5 ميجابايت");
     }
     setFile(f);
   }
@@ -72,9 +72,9 @@ export function VisitDialog({ visit, doctorId }: Props) {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (diagnosis.trim().length < 3)
-      return setError("اكتب التشخيص (3 حروف على الأقل)");
+      return setError("اكتب التشخيص (3 أحرف على الأقل)");
     const token = getAccessToken();
-    if (!token) return setError("الجلسة خلصت، اعمل Refresh للصفحة");
+    if (!token) return setError("انتهت الجلسة، أعد تحميل الصفحة");
 
     setPending(true);
     setError(undefined);
@@ -108,8 +108,8 @@ export function VisitDialog({ visit, doctorId }: Props) {
           <DialogTitle>كشف {person.name}</DialogTitle>
           <DialogDescription>
             {person.hasAccount
-              ? "اكتب التشخيص، وارفع الروشتة علشان المريض ينزّلها من حسابه."
-              : "المريض ده ملوش حساب على الموقع، فالروشتة ورقي. اكتب التشخيص بس."}
+              ? "اكتب التشخيص، وارفع الوصفة الطبية ليتمكن المريض من تحميلها من حسابه."
+              : "هذا المريض ليس لديه حساب على الموقع، لذا تكون الوصفة ورقية. اكتب التشخيص فقط."}
           </DialogDescription>
         </DialogHeader>
 
@@ -123,19 +123,18 @@ export function VisitDialog({ visit, doctorId }: Props) {
               onChange={(e) => setDiagnosis(e.target.value)}
               disabled={pending}
               className="w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              placeholder="مثلاً: التهاب في الحلق، راحة وسوائل دافية"
+              placeholder="مثال: التهاب في الحلق، راحة وسوائل دافئة"
             />
           </div>
 
           {person.hasAccount && (
             <div className="grid gap-2">
               <Label htmlFor="prescription">
-                الروشتة (PDF أو صورة، 5 ميجا بالكتير)
+                الوصفة الطبية (PDF أو صورة، 5 ميجابايت كحد أقصى)
               </Label>
               {visit.prescription_path && !file && (
                 <p className="flex items-center gap-1.5 text-sm text-primary">
-                  <FileCheck2 className="size-4" /> فيه روشتة مرفوعة. لو رفعت
-                  واحدة جديدة هتتحط مكانها.
+                  <FileCheck2 className="size-4" /> توجد وصفة مرفوعة. إذا رفعت وصفة جديدة فستحل محلها.
                 </p>
               )}
               <input
@@ -158,7 +157,7 @@ export function VisitDialog({ visit, doctorId }: Props) {
 
           <Button type="submit" disabled={pending}>
             <Upload />{" "}
-            {pending ? (file ? "بيرفع الروشتة…" : "بيحفظ…") : "حفظ الكشف"}
+            {pending ? (file ? "جارٍ رفع الوصفة…" : "جارٍ الحفظ…") : "حفظ الكشف"}
           </Button>
         </form>
       </DialogContent>

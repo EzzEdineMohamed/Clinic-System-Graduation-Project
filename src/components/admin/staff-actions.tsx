@@ -45,7 +45,7 @@ async function patchStaff(
   changes: StaffUpdate,
 ): Promise<string | null> {
   const token = getAccessToken();
-  if (!token) return "الجلسة خلصت، اعمل Refresh للصفحة وجرب تاني";
+  if (!token) return "انتهت الجلسة، أعد تحميل الصفحة وحاول مرة أخرى";
   try {
     await adminApi.updateStaff(token, id, changes);
     return null;
@@ -135,7 +135,7 @@ function EditStaff({ member }: { member: StaffMember }) {
               <FieldError errors={fe.full_name} />
             </Field>
             <Field>
-              <Label htmlFor={`phone-${member.id}`}>رقم الموبايل</Label>
+              <Label htmlFor={`phone-${member.id}`}>رقم الهاتف</Label>
               <Input
                 id={`phone-${member.id}`}
                 name="phone"
@@ -149,7 +149,7 @@ function EditStaff({ member }: { member: StaffMember }) {
             </Field>
             <SubmitButton
               pending={pending}
-              pendingText="جاري الحفظ…"
+              pendingText="جارٍ الحفظ…"
               className="mt-2"
             >
               حفظ التعديل

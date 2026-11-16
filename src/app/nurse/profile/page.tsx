@@ -12,8 +12,8 @@ export default async function NurseProfile() {
         <CardContent>
           <dl>
             <InfoRow label="الاسم" value={user.full_name ?? ""} />
-            <InfoRow label="الأيميل" value={user.email} ltr />
-            <InfoRow label="رقم الموبايل" value={user.phone} ltr />
+            <InfoRow label="البريد الإلكتروني" value={user.email} ltr />
+            <InfoRow label="رقم الهاتف" value={user.phone} ltr />
           </dl>
         </CardContent>
         <CardFooter>

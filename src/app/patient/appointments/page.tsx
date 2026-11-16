@@ -63,8 +63,8 @@ function AppointmentCard({ a, today }: { a: MyAppointment; today: string }) {
           {formatMoney(a.fee)}
           {a.payment && (
             <span className="text-muted-foreground">
-              · {a.payment.method === "card" ? "فيزا" : "كاش"} ·
-              {a.source === "online" ? "أونلاين" : "من العيادة"}
+              · {a.payment.method === "card" ? "بطاقة" : "نقدًا"} ·
+              {a.source === "online" ? "عبر الإنترنت" : "من العيادة"}
             </span>
           )}
         </span>
@@ -86,19 +86,19 @@ function AppointmentCard({ a, today }: { a: MyAppointment; today: string }) {
             <FileText className="size-4" /> التشخيص
           </p>
           <p className="text-muted-foreground">
-            {a.diagnosis ?? "الدكتور مكتبش تشخيص"}
+            {a.diagnosis ?? "لم يكتب الطبيب تشخيصًا"}
           </p>
           {a.prescription_path ? (
             <div className="mt-1">
               <PrescriptionButton
                 path={a.prescription_path}
-                label="نزّل الروشتة"
+                label="تحميل الوصفة الطبية"
               />
             </div>
           ) : (
             a.diagnosis && (
               <p className="text-xs text-muted-foreground">
-                الروشتة ورقي من العيادة
+                الوصفة الطبية ورقية من العيادة
               </p>
             )
           )}
@@ -139,7 +139,7 @@ export default async function PatientAppointments() {
 
       {!error && appointments.length === 0 && (
         <div className="grid justify-items-center gap-3 rounded-xl border border-dashed bg-card p-10 text-center">
-          <p className="text-muted-foreground">مفيش حجوزات لسه</p>
+          <p className="text-muted-foreground">لا توجد حجوزات بعد</p>
           <Button asChild>
             <Link href="/patient">احجز كشف</Link>
           </Button>
@@ -148,7 +148,7 @@ export default async function PatientAppointments() {
 
       {upcoming.length > 0 && (
         <section className="mb-8">
-          <h2 className="mb-3 text-lg font-bold">الحجوزات الجاية</h2>
+          <h2 className="mb-3 text-lg font-bold">الحجوزات القادمة</h2>
           <div className="grid gap-3">
             {upcoming.map((a) => (
               <AppointmentCard key={a.id} a={a} today={today} />
@@ -159,7 +159,7 @@ export default async function PatientAppointments() {
 
       {past.length > 0 && (
         <section>
-          <h2 className="mb-3 text-lg font-bold">الحجوزات اللي فاتت</h2>
+          <h2 className="mb-3 text-lg font-bold">الحجوزات السابقة</h2>
           <div className="grid gap-3">
             {past.map((a) => (
               <AppointmentCard key={a.id} a={a} today={today} />
