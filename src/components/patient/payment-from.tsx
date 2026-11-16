@@ -111,21 +111,6 @@ export function PaymentForm({
           <CreditCard className="size-5 text-primary" /> الدفع بالفيزا
         </p>
 
-        {/* <Alert>
-          <FlaskConical />
-          <AlertDescription>
-            وضع التجربة، مفيش فلوس حقيقية بتتخصم. استخدم
-            <span dir="ltr" className="font-mono font-semibold">
-              4242 4242 4242 4242
-            </span>
-            للنجاح، أو
-            <span dir="ltr" className="font-mono font-semibold">
-              4000 0000 0000 0002
-            </span>
-            للرفض، وأي تاريخ جاي وأي 3 أرقام.
-          </AlertDescription>
-        </Alert> */}
-
         {error && (
           <Alert variant="destructive">
             <AlertCircle />
