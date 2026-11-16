@@ -18,6 +18,7 @@ import { cairoToday, formatDay } from "@/lib/dates";
 import { formatMoney, formatTime } from "@/lib/format";
 import type { MyAppointment } from "@/types/booking";
 import { PageTitle } from "@/components/coming-next";
+import { PrescriptionButton } from "@/components/prescription-button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -50,19 +51,19 @@ function AppointmentCard({ a, today }: { a: MyAppointment; today: string }) {
 
       <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm">
         <span className="flex items-center gap-1.5">
-          <CalendarDays className="size-4 text-muted-foreground" />{" "}
+          <CalendarDays className="size-4 text-muted-foreground" />
           {formatDay(a.appointment_date)}
         </span>
         <span className="flex items-center gap-1.5">
-          <Clock className="size-4 text-muted-foreground" />{" "}
+          <Clock className="size-4 text-muted-foreground" />
           {formatTime(a.start_time)} – {formatTime(a.end_time)}
         </span>
         <span className="flex items-center gap-1.5">
-          <Receipt className="size-4 text-muted-foreground" />{" "}
+          <Receipt className="size-4 text-muted-foreground" />
           {formatMoney(a.fee)}
           {a.payment && (
             <span className="text-muted-foreground">
-              · {a.payment.method === "card" ? "فيزا" : "كاش"} ·{" "}
+              · {a.payment.method === "card" ? "فيزا" : "كاش"} ·
               {a.source === "online" ? "أونلاين" : "من العيادة"}
             </span>
           )}
@@ -78,6 +79,7 @@ function AppointmentCard({ a, today }: { a: MyAppointment; today: string }) {
         </p>
       )}
 
+      {/* التشخيص والروشتة: للحجز اللي اتكشف بس */}
       {a.status === "attended" && (
         <div className="grid gap-1 rounded-lg bg-muted/50 p-3 text-sm">
           <p className="flex items-center gap-1.5 font-semibold">
@@ -86,7 +88,20 @@ function AppointmentCard({ a, today }: { a: MyAppointment; today: string }) {
           <p className="text-muted-foreground">
             {a.diagnosis ?? "الدكتور مكتبش تشخيص"}
           </p>
-          {/* تنزيل الروشتة هيتعمل مع موديول الدكتور */}
+          {a.prescription_path ? (
+            <div className="mt-1">
+              <PrescriptionButton
+                path={a.prescription_path}
+                label="نزّل الروشتة"
+              />
+            </div>
+          ) : (
+            a.diagnosis && (
+              <p className="text-xs text-muted-foreground">
+                الروشتة ورقي من العيادة
+              </p>
+            )
+          )}
         </div>
       )}
     </article>
