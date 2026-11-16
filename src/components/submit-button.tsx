@@ -11,11 +11,22 @@ type Props = React.ComponentProps<typeof Button> & {
 };
 
 /** Submit button: disabled until the page is ready, then shows a spinner + text while the request runs. */
-export function SubmitButton({ children, pending, pendingText, disabled, ...props }: Props) {
+export function SubmitButton({
+  children,
+  pending,
+  pendingText,
+  disabled,
+  ...props
+}: Props) {
   const hydrated = useHydrated();
   const busy = pending || !hydrated;
   return (
-    <Button type="submit" disabled={busy || disabled} aria-busy={busy} {...props}>
+    <Button
+      type="submit"
+      disabled={busy || disabled}
+      aria-busy={busy}
+      {...props}
+    >
       {busy && <Loader2 className="animate-spin" />}
       {!hydrated ? "لحظة…" : pending ? pendingText : children}
     </Button>

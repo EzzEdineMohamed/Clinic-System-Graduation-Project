@@ -3,7 +3,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 /** Shown instantly while a role page loads its data (used by each loading.tsx). */
 export function PageLoading({ cards = 0 }: { cards?: number }) {
   return (
-    <div role="status" aria-live="polite" className="animate-in fade-in duration-300">
+    <div
+      role="status"
+      aria-live="polite"
+      className="animate-in fade-in duration-300"
+    >
       <span className="sr-only">جاري التحميل…</span>
       <Skeleton className="mb-2 h-8 w-48" />
       <Skeleton className="mb-8 h-4 w-72 max-w-full" />

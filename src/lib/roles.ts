@@ -16,7 +16,7 @@ export const ROLE_HOME: Record<Role, string> = {
 
 export const ROLE_LABEL: Record<Role, string> = {
   patient: "مريض",
-  nurse: "ممرضة",
+  nurse: "سكرتيرة",
   doctor: "دكتور",
   admin: "مدير العيادة",
 };
