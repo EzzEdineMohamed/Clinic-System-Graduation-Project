@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 import { LinkPending } from "@/components/link-pending";
 
 const LINKS = [
-  // { href: "/admin", label: "لوحة التحكم", icon: LayoutDashboard },
+  { href: "/admin", label: "لوحة التحكم", icon: LayoutDashboard },
   { href: "/admin/doctors", label: "الأطباء", icon: Stethoscope },
   { href: "/admin/nurses", label: "السكرتارية", icon: UserRound },
   { href: "/admin/patients", label: "المرضى", icon: Users },

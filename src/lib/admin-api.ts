@@ -15,6 +15,7 @@ import type {
   StaffMember,
   StaffRole,
   StaffUpdate,
+  AdminDashboard,
 } from "@/types/admin";
 import { PatientRow } from "./validation/auth";
 
@@ -94,4 +95,11 @@ export const adminApi = {
   /** POST /rest/v1/rpc/admin_save_doctor: بيانات الدكتور ومواعيده مرة واحدة */
   saveDoctor: (token: string, input: SaveDoctorInput) =>
     request<null>("/rest/v1/rpc/admin_save_doctor", { token, body: input }),
+
+    /** POST /rest/v1/rpc/admin_dashboard: أرقام لوحة التحكم لشهر معين (الافتراضي الشهر الحالي) */
+  dashboard: (token: string, month?: string) =>
+    request<AdminDashboard>("/rest/v1/rpc/admin_dashboard", {
+      token,
+      body: month && /^\d{4}-\d{2}$/.test(month) ? { p_month: `${month}-01` } : {},
+    }),
 };

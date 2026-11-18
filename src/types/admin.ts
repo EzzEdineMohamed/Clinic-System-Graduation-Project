@@ -84,3 +84,28 @@ export interface SetPasswordResponse {
   message: string;
   user_id: string;
 }
+
+/** رد admin_dashboard: أرقام لوحة التحكم */
+export interface AdminDashboard {
+  month: string;
+  today: { bookings: number; attended: number; waiting: number };
+  counts: { patients: number; doctors: number; nurses: number };
+  month_totals: {
+    bookings: number;
+    attended: number;
+    cancelled: number;
+    revenue: number;
+    clinic_share: number;
+    refunded: number;
+  };
+  doctors: {
+    id: string;
+    full_name: string;
+    specialty: string;
+    bookings: number;
+    attended: number;
+    revenue: number;
+    clinic_share: number;
+    doctor_share: number;
+  }[];
+}

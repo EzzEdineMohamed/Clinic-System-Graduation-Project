@@ -7,7 +7,7 @@
 // =====================================================================
 
 import { useState } from "react";
-import { AlertCircle, CreditCard, FlaskConical } from "lucide-react";
+import { AlertCircle, CreditCard } from "lucide-react";
 import { ApiError } from "@/lib/api";
 import { authErrorMessage } from "@/lib/api-messages";
 import { bookingApi } from "@/lib/booking-api";
@@ -72,7 +72,8 @@ export function PaymentForm({
 
     // 2) التوكن
     const token = getAccessToken();
-    if (!token) return setError("انتهت الجلسة، أعد تحميل الصفحة وحاول مرة أخرى");
+    if (!token)
+      return setError("انتهت الجلسة، أعد تحميل الصفحة وحاول مرة أخرى");
 
     // 3) الحجز والدفع
     setPending(true);
